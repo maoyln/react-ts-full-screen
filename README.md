@@ -1,70 +1,93 @@
-# Getting Started with Create React App
+## 全屏API
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+`全屏 API` 为使用用户的整个屏幕展现网络内容提供了一种简单的方式，并且在不需要时退出全屏模式。这种 API 让你可以简单地控制浏览器，使得一个元素与其子元素，如果存在的话，可以占据整个屏幕，并在此期间，从屏幕上隐藏所有的浏览器用户界面以及其他应用。
 
-## Available Scripts
+可以在`全屏 API 指南`这篇文章了解更多细节。
 
-In the project directory, you can run:
+> 注意：当前并不是所有的浏览器都支持该 API，大多数浏览器需要使用供应商前缀或者尚未实现该规范。下面的浏览器兼容性表 Browser compatibility 可以看到各个浏览器对此的支持（你也可以使用 Fscreen 来提供跨浏览器 API 访问）。
 
-### `yarn start`
+### 接口
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+全屏 API 没有它自己的接口实现。相反，它提供了一些其他接口以供实现全屏所需的方法、属性、事件处理函数。接下来会列出所有细节。
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### 方法
 
-### `yarn test`
+全屏 API 在 Document 和 Element 接口中增加了一些方法，可用于允许打开关闭全屏模式。
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Document 中的方法
 
-### `yarn build`
+`Document.exitFullscreen()`
+用于请求从全屏模式切换到窗口模式，会返回一个 `Promise`，会在全屏模式完全关闭的时候被置为 resolved 状态。
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Element 中的方法
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+`Element.requestFullscreen()`
+请求浏览器（user agent）将特定元素（甚至延伸到它的后代元素）置为全屏模式，隐去屏幕上的浏览器所有 UI 元素，以及其它应用。返回一个 `Promise`，并会在全屏模式被激活的时候变成 resolved 状态。
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+### 属性
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+`Document` 提供了可以用于判断是否支持和启用全屏模式的属性，也能得知现在是否处在全屏模式、哪一个元素在使用屏幕等信息。
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`DocumentOrShadowRoot.fullscreenElement`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+`fullscreenElement` 属性提供了当前在 DOM （或者 shadow DOM）里被展示为全屏模式的 `Element`，如果这个值为 null，文档不处于全屏模式。
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+`Document.fullscreenEnabled`
 
-## Learn More
+`fullscreenEnabled` 属性提供了启用全屏模式的可能性。当它的值是 false 的时候，表示全屏模式不可用（可能的原因有 "fullscreen" 特性不被允许，或全屏模式不被支持等 ）。
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### 事件处理程序
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Fullscreen API 定义了两个事件，可用于检测全屏模式的打开和关闭，以及在全屏和窗口模式之间切换过程中发生的错误。`Document` 和  `Element` 接口提供了这些事件的事件处理函数。
 
-### Code Splitting
+> 注意：这些事件处理函数特性不可以当成 HTML 内容属性来使用。 换句话说，你无法在 HTML 内容中为 fullscreenchange (en-US) 和 fullscreenerror (en-US) 指定事件处理程序，你必须通过  JavaScript 代码添加它们。
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+#### Document 上的事件处理程序
 
-### Analyzing the Bundle Size
+`Document.onfullscreenchange`
+`fullscreenchange (en-US)` 事件的处理程序，当进入全屏或退出全屏时，事件将被发送到`Document`上。此处理程序仅在整个文档全屏模式更改时有效。
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+`Document.onfullscreenerror`
+`fullscreenerror (en-US)` 事件的处理程序，当进入全屏或退出全屏出错时，事件将被发送到 `Document` 上，仅对整个文档的全屏模式更改出错时候有效。
 
-### Making a Progressive Web App
+#### Element 上的事件处理程序
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+`Element.onfullscreenchange`
+当全屏事件发生时，该事件会被发送到该元素，表明该元素进入或退出全屏模式
 
-### Advanced Configuration
+`Element.onfullscreenerror`
+`fullscreenerror (en-US)` 事件的处理程序，当指定的 `Element` 改变全屏模式时候出现错误，该事件将被发送到指定的 `Element` 上。
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+#### 废弃属性
 
-### Deployment
+Fullscreen API 定义了两个事件，可用于检测全屏模式的打开和关闭，以及在全屏和窗口模式之间切换过程中发生的错误。Document 和  Element 接口提供了这些事件的事件处理函数。
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+> 注意：这些事件处理函数特性不可以当成 HTML 内容属性来使用。 换句话说，你无法在 HTML 内容中为 fullscreenchange (en-US) 和 fullscreenerror (en-US) 指定事件处理程序，你必须通过  JavaScript 代码添加它们。
 
-### `yarn build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Dictionaries
+
+`FullscreenOptions (en-US)`
+在调用 `requestFullscreen()` 时可以设置选项。
+
+#### 访问控制
+
+全屏模式可由功能策略（ Feature Policy）控制。全屏模式功能由字符串“full screen”标识，默认的允许列表值为“self”，这意味着在顶级文档上下文 以及 从与顶级文档相同的源加载的嵌套上下文中允许使用全屏模式。
+
+请参阅使用功能策略（ Feature Policy ）以了解有关使用功能策略控制对API的访问的更多信息。
+
+
+#### 使用说明
+
+用户通过按 ++==ESC==++  键（或 ++==F11==++）即可退出全屏模式，而不是等着站点或应用的代码来做这件事。确定你在你的用户界面里提供合适的界面元素来告知用户这个可选项。
+
+> 注意：当处在全屏模式中，浏览其他页面，切换标签页，或者切换到其他应用（例如使用 Alt-Tab）也会导致退出全屏模式。
+
+### 浏览器兼容性
+
+所有的浏览器都实现了这个API。然而一些带有前缀的实现在拼写上略微有些差别；例如，不同于 requestFullscreen()，存在一个 MozRequestFullScreen()。
+
+![](https://cdn.jsdelivr.net/gh/maoyln/maoyl-img/blog/831629109557_.pic.jpg)
+
+![](https://cdn.jsdelivr.net/gh/maoyln/maoyl-img/blog/841629109670_.pic.jpg)
