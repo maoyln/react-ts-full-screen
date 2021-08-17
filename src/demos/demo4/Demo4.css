@@ -1,0 +1,19 @@
+.demo4 {
+  height: 100vh;
+  text-align: center;
+  background-image: url('https://cdn.jsdelivr.net/gh/maoyln/maoyl-img/blog/10511463W5s.jpeg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  font-size: 20px;
+  color: red;
+}
+
+.demo-second {
+  background: yellowgreen;
+}
+
+/* 未起作用 */
+#demoSecond:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+}
