@@ -29,13 +29,20 @@ const Demo5 = function (props: Props) {
         }
       }
 
+      btn1ObjA.onfullscreenchange = function () {
+        console.log("是否进入全屏");
+      };
+
+      btn1ObjA.onfullscreenerror = function () {
+        console.log("进入全屏失败");
+      };
+
       const btn1ObjB: any = document.getElementById("demoSecondB");
       if (btn1ObjB) {
         btn1ObjB.onclick = function (event: any) {
           var evt = event || window.event;
           // IE用cancelBubble=true来阻止而FF下需要用stopPropagation方法
           evt.stopPropagation ? evt.stopPropagation() : (evt.cancelBubble=true);
-
           // if (!document.fullscreenElement) {
           //   openFullscreen(btn1ObjB);
           // } else {
@@ -44,10 +51,6 @@ const Demo5 = function (props: Props) {
           btn1ObjA.click();
         }
       }
-
-      btn1ObjB.onfullscreenchange = function () {
-        console.log("FULL SCREEN CHANGE ELEMENT2")
-      };
 
       btn1ObjB.click();
     }
@@ -59,9 +62,8 @@ const Demo5 = function (props: Props) {
    */
   const openFullscreen: Function = (element: any): void => {
     console.log('demo5--=-');
-    // 注意：在响应用户交互或设备方向更改时必须调用此方法；否则会失败。
     const options = {
-      navigationUI: 'hide'
+      navigationUI: "show"
     };
     if (element.requestFullscreen) {
       element.requestFullscreen(options).then((res: any) => {

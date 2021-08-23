@@ -1,40 +1,42 @@
 import React, { useEffect } from 'react';
 import './Demo2.css';
-/**
- * 在浏览器中，document对象是HTMLDocument(继承自Document类型）的一个实例，表达整个HTML页面。
- * 而且，document对象是window对象的一个属性，因此可以将其作为全局对象来访问
- * 
- * document.documentElement: 指向HTML页面中的html元素
- * document.body: 指向HTML页面中的body元素
- * HTMLHtmlElement对象和HTMLBodyElement对象继承了HTMLElement接口，HTMLElement可以表示所有的接口
- * 
- * 1、document类型表示整个文档，是一组分层节点的根节点
- * 2、element节点表示文档中的所有HTML或XML元素，可以用来操作这些元素的内容和特性
- */
+
 interface Props {}
 
 const Demo2 = function (props: Props) {
   useEffect(() => {
-    document.addEventListener("click", function(e) {
-      e.stopPropagation();
-      e.preventDefault();
-      console.log(Object.prototype.toString.call(document), '类型');
+    document.addEventListener("click", function(event: any) {
+      event.stopPropagation();
+      event.preventDefault();
       toggleFullScreen(document);
     }, false);
 
     window.onload = () => {
-      const btn1Obj: any = document.getElementById("demoSecond");
+      const btn1Obj: any = document.getElementById("demoSecond1");
       if (btn1Obj) {
         btn1Obj.addEventListener("click", function(event: any) {
           event.stopPropagation();
           event.preventDefault();
-          if (!document.fullscreenElement) {
-            openFullscreen(btn1Obj);
-          } else {
-            exitFullScreen()
-          }
+          openFullscreen(btn1Obj);
         }, false);
       }
+
+      const btn2Obj: any = document.getElementById("demoSecond2");
+      if (btn2Obj) {
+        btn2Obj.addEventListener("click", function(event: any) {
+          event.stopPropagation();
+          event.preventDefault();
+          openFullscreen(btn2Obj);
+        }, false);
+      }
+
+      // 退出
+      const btn3Obj: any = document.getElementById("demoSecond3");
+      btn3Obj.addEventListener("click", function(event: any) {
+        event.stopPropagation();
+        event.preventDefault();
+        exitFullScreen()
+      }, false);
      }
   });
 
@@ -42,18 +44,20 @@ const Demo2 = function (props: Props) {
    * 打开全屏方法
    */
   const openFullscreen: Function = (element: HTMLElement | any): void => {
-    console.log(element, 'element--');
+    const options = {
+      navigationUI: 'show'
+    };
     if (element.requestFullscreen) {
       element.requestFullscreen();
     } else if (element.mozRequestFullScreen) {
       // Gecko (Firefox)
-      element.mozRequestFullScreen();
+      element.mozRequestFullScreen(options);
     } else if (element.msRequestFullscreen) {
       // Internet Explorer
-      element.msRequestFullscreen();
+      element.msRequestFullscreen(options);
     } else if (element.webkitRequestFullscreen) {
       // WebKit (Safari) / Blink (Chrome & Opera) / Edge
-      element.webkitRequestFullScreen();
+      element.webkitRequestFullScreen(options);
     }
   }
 
@@ -85,9 +89,15 @@ const Demo2 = function (props: Props) {
   }
   return (
     <div className="demo2">
-      一级
-      <div id="demoSecond" className="demo-second">
-        二级
+      一级全屏
+      <div id="demoSecond1" className="demo-second-1">
+        二级全屏
+        <div id="demoSecond2" className="demo-second-2">
+          三级全屏
+          <div id="demoSecond3" className="demo-second-3">
+            退出全屏
+          </div>
+        </div>
       </div>
     </div>
   );

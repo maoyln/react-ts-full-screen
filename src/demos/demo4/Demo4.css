@@ -11,9 +11,3 @@
 .demo-second {
   background: yellowgreen;
 }
-
-/* 未起作用 */
-#demoSecond:-webkit-full-screen {
-  width: 100vw;
-  height: 100vh;
-}

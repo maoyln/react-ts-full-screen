@@ -8,32 +8,8 @@
   color: red;
 }
 
-.my-button {
-  color: #fff;
-  border-color: #1890ff;
-  background: #1890ff;
-  text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
-  box-shadow: 0 2px #0000000b;
-}
-
-.demo-second-a {
+.demo6 > .demo-second-a {
+  height: 20vh;
   background: yellowgreen;
-  background-image: linear-gradient(#e69f64, #64dde6, #a9e664, #4115e0);
+  /* background-image: linear-gradient(#e69f64, #64dde6, #a9e664, #4115e0); */
 }
-
-.demo-second-b {
-  background: yellow;
-  background-image: linear-gradient(#4115e0, #a9e664,  #64dde6, #e69f64);
-}
-
-iframe {
-  background-image: url('https://cdn.jsdelivr.net/gh/maoyln/maoyl-img/blog/10511463W5s.jpeg');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
-
-/* 未起作用 */
-/* #demoSecondA:-webkit-full-screen {
-  width: 100%;
-  height: 100%;
-} */

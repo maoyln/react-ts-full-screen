@@ -8,6 +8,29 @@
   color: red;
 }
 
-.demo-second {
+.demo-second-1 {
   background: yellowgreen;
+}
+
+.demo-second-2 {
+  background: #c3c3c3;
+  color: blue;
+}
+
+.demo-second-3 {
+  background: #72b864;
+  color: rgb(255, 208, 0);
+}
+
+:-webkit-full-screen {
+  width: 100% !important;
+  height: 100% !important;
+  /* background: #78ecec; */
+}
+
+:fullscreen {
+  height: 100% !important;
+  width: 100% !important;
+  /* background-color: rgb(91, 108, 202); */
+  /* border: 2px solid #f00; */
 }

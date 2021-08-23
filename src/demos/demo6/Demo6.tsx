@@ -13,7 +13,34 @@ interface Props {}
 
 const Demo6 = function (props: Props) {
   useEffect(() => {
+    window.onload = () => {
+      const btn1ObjA: any = document.getElementById("demoSecondA");
+      if (btn1ObjA) {
+        btn1ObjA.onclick = function (event: any) {
+          var evt = event || window.event;
+          // IE用cancelBubble=true来阻止而FF下需要用stopPropagation方法
+          evt.stopPropagation ? evt.stopPropagation() : (evt.cancelBubble=true);
 
+          if (!document.fullscreenElement) {
+            openFullscreen(btn1ObjA);
+          }
+          // else {
+          //   exitFullScreen();
+          // }
+        }
+      }
+
+      // btn1ObjB.click();
+
+      window.addEventListener('resize', () => {
+        setTimeout(() => {
+          if (!document.fullscreenElement) {
+            console.log('resize', '---');
+            openFullscreen(btn1ObjA);
+          }
+        }, 10)
+      });
+    }
   });
 
   /**
@@ -21,6 +48,8 @@ const Demo6 = function (props: Props) {
    * HTMLElement | HTMLHtmlElement
    */
   const openFullscreen: Function = (element: any): void => {
+    console.log('demo6--=-');
+    // 注意：在响应用户交互或设备方向更改时必须调用此方法；否则会失败。
     if (element.requestFullscreen) {
       element.requestFullscreen().then((res: any) => {
         console.log(res);
@@ -28,11 +57,14 @@ const Demo6 = function (props: Props) {
         console.log(err);
       });
     } else if (element.mozRequestFullScreen) {
-      element.mozRequestFullScreen(); // Gecko (Firefox)
+      // Gecko (Firefox)
+      element.mozRequestFullScreen();
     } else if (element.msRequestFullscreen) {
-      element.msRequestFullscreen(); // Internet Explorer
+      // Internet Explorer
+      element.msRequestFullscreen();
     } else if (element.webkitRequestFullscreen) {
-      element.webkitRequestFullScreen(); // WebKit (Safari) / Blink (Chrome & Opera) / Edge
+      // WebKit (Safari) / Blink (Chrome & Opera) / Edge
+      element.webkitRequestFullScreen();
     }
   }
 
@@ -44,48 +76,23 @@ const Demo6 = function (props: Props) {
     if (dom.exitFullscreen) {
       dom.exitFullscreen();
     } else if (dom.mozCancelFullScreen) {
-      dom.mozCancelFullScreen(); // Gecko (Firefox)
+      // Gecko (Firefox)
+      dom.mozCancelFullScreen();
     } else if (dom.msExitFullscreen) {
-      dom.msExitFullscreen(); // Internet Explorer
+      // Internet Explorer
+      dom.msExitFullscreen();
     } else if (dom.webkitExitFullscreen) {
-      dom.webkitExitFullscreen(); // WebKit (Safari) / Blink (Chrome & Opera) / Edge
-    }
-  }
-
-  const handleClickA = (): void => {
-    const btn1ObjA: any = document.getElementById("demoSecondA");
-      if (btn1ObjA) {
-        if (!document.fullscreenElement) {
-          openFullscreen(btn1ObjA);
-        } else {
-          exitFullScreen();
-        }
-      }
-  }
-
-  const handleClickB = (): void => {
-    const btn1ObjB: any = document.getElementById("demoSecondB");
-    if (btn1ObjB) {
-      if (!document.fullscreenElement) {
-        openFullscreen(btn1ObjB);
-      } else {
-        exitFullScreen()
-      }
+      // WebKit (Safari) / Blink (Chrome & Opera) / Edge
+      dom.webkitExitFullscreen();
     }
   }
 
   return (
     <div className="demo6">
-      <div>
-        <span className="my-button" onClick={handleClickA} >demoSecondA</span>
-        ~｜~
-        <span className="my-button" onClick={handleClickB}>demoSecondB</span>
+      一级
+      <div id="demoSecondA" className="demo-second-a">
+        二级-A
       </div>
-      {/* https://aecloud-test.glodon.com/portal/img/logo.e7c61859.png */}
-      {/* https://gw.alipayobjects.com/zos/basement_prod/d2fa63a8-3e9d-4f59-80c7-1fd1d0cd9118.svg */}
-      <iframe id="demoSecondA" width="500px" height="300px" src="https://aecloud-test.glodon.com/portal/img/logo.e7c61859.png" allowFullScreen></iframe>
-      <hr />
-      <iframe id="demoSecondB" width="500px" height="300px" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"></iframe>
     </div>
   );
 };

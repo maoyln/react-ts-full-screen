@@ -59,7 +59,17 @@ const Demo3 = function (props: Props) {
   });
 
   const toggleFullScreen: Function = (elem: Document): void => {
-    if (!document.fullscreenElement) {
+    const document: any = window.document;
+    // 判断当前是否为全屏模式
+    const fullscreenElement = document.fullscreenElement
+      || document.mozFullscreenElement 
+      || document.webkitFullscreenElement;
+    // 判断是否支持全屏
+    const fullscreenEnabled = document.fullscreenEnabled
+      || document.mozFullscreenEnabled
+      || document.webkitFullscreenEnabled;
+
+    if (!fullscreenElement && fullscreenEnabled) {
       openFullscreen(elem.documentElement);
     } else {
       exitFullScreen();

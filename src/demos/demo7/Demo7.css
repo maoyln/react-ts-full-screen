@@ -1,4 +1,4 @@
-.demo5 {
+.demo7 {
   height: 100vh;
   text-align: center;
   background-image: url('https://cdn.jsdelivr.net/gh/maoyln/maoyl-img/blog/10511463W5s.jpeg');
@@ -6,6 +6,14 @@
   background-size: 100% 100%;
   font-size: 20px;
   color: red;
+}
+
+.my-button {
+  color: #fff;
+  border-color: #1890ff;
+  background: #1890ff;
+  text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
+  box-shadow: 0 2px #0000000b;
 }
 
 .demo-second-a {
@@ -16,4 +24,10 @@
 .demo-second-b {
   background: yellow;
   background-image: linear-gradient(#4115e0, #a9e664,  #64dde6, #e69f64);
+}
+
+iframe {
+  background-image: url('https://cdn.jsdelivr.net/gh/maoyln/maoyl-img/blog/10511463W5s.jpeg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
